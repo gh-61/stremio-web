@@ -11,7 +11,10 @@
         "build": "webpack --mode production",
         "test": "jest",
         "lint": "eslint src",
-        "scan-translations": "pnpx jest ./tests/i18nScan.test.js"
+        "scan-translations": "pnpx jest ./tests/i18nScan.test.js",
+        "preview": "wrangler pages dev",
+        "deploy": "wrangler pages deploy",
+        "dev:cf": "pnpm build && pnpm run preview"
     },
     "dependencies": {
         "@babel/runtime": "7.26.0",
@@ -83,6 +86,7 @@
         "webpack-cli": "5.1.4",
         "webpack-dev-server": "^5.1.0",
         "webpack-pwa-manifest": "^4.3.0",
-        "workbox-webpack-plugin": "^7.3.0"
+        "workbox-webpack-plugin": "^7.3.0",
+        "wrangler": "^4.66.0"
     }
 }

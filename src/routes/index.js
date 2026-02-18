@@ -1,6 +1,7 @@
 // Copyright (C) 2017-2023 Smart code 203358507
 
 const Addons = require('./Addons');
+const Auth = require('./Auth');
 const Board = require('./Board');
 const Discover = require('./Discover');
 const Library = require('./Library');
@@ -14,6 +15,7 @@ const Intro = require('./Intro');
 
 module.exports = {
     Addons,
+    Auth,
     Board,
     Discover,
     Library,

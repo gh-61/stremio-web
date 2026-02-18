@@ -14,6 +14,7 @@ const { default: UpdaterBanner } = require('./UpdaterBanner');
 const { default: ShortcutsModal } = require('./ShortcutsModal');
 const ErrorDialog = require('./ErrorDialog');
 const withProtectedRoutes = require('./withProtectedRoutes');
+const withSiteAuth = require('./withSiteAuth');
 const routerViewsConfig = require('./routerViewsConfig');
 const styles = require('./styles');
 
@@ -239,4 +240,4 @@ const App = () => {
     );
 };
 
-module.exports = App;
+module.exports = withSiteAuth(App);

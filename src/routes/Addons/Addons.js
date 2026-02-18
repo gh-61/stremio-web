@@ -16,6 +16,10 @@ const useSelectableInputs = require('./useSelectableInputs');
 const styles = require('./styles');
 const { AddonPlaceholder } = require('./AddonPlaceholder');
 
+// Lowercase strings to hide addons whose name or description contains any of these terms
+// Example: ['unwanted addon', 'some keyword']
+const HIDDEN_ADDONS = ['hentai', 'porn', 'xxx', 'erotic', 'sex', 'hanime', 'jav', 'strip', '18+', 'stripchat', 'chaturbate', 'livejasmin', 'myfreecams', 'bongacams', 'camsoda', 'imlive', 'flirt4free', 'xhamster', 'xvideos', 'redtube', 'youporn', 'pornhub', 'xnxx', 'pornhub',];
+
 const Addons = ({ urlParams, queryParams }) => {
     const { t } = useTranslation();
     const platform = usePlatform();
@@ -87,6 +91,12 @@ const Addons = ({ urlParams, queryParams }) => {
     const closeAddonDetails = React.useCallback(() => {
         setAddonDetailsTransportUrl(null);
     }, [setAddonDetailsTransportUrl]);
+    const hiddenAddonPredicate = React.useCallback((addon) => {
+        if (HIDDEN_ADDONS.length === 0) return true;
+        const name = (addon.manifest.name || '').toLowerCase();
+        const description = (addon.manifest.description || '').toLowerCase();
+        return !HIDDEN_ADDONS.some((term) => name.includes(term) || description.includes(term));
+    }, []);
     const searchFilterPredicate = React.useCallback((addon) => {
         return search.length === 0 ||
             (
@@ -143,6 +153,7 @@ const Addons = ({ urlParams, queryParams }) => {
                                 <div className={styles['addons-list-container']}>
                                     {
                                         installedAddons.catalog
+                                            .filter(hiddenAddonPredicate)
                                             .filter(searchFilterPredicate)
                                             .map((addon, index) => (
                                                 <Addon
@@ -183,6 +194,7 @@ const Addons = ({ urlParams, queryParams }) => {
                                     <div className={styles['addons-list-container']}>
                                         {
                                             remoteAddons.catalog.content.content
+                                                .filter(hiddenAddonPredicate)
                                                 .filter(searchFilterPredicate)
                                                 .map((addon, index) => (
                                                     <Addon

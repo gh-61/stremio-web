@@ -1,6 +1,7 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useServices } from 'stremio/services';
+import { SiteAuthContext } from 'stremio/App/withSiteAuth';
 import { Link } from '../../components';
 import styles from './User.less';
 
@@ -11,6 +12,7 @@ type Props = {
 const User = ({ profile }: Props) => {
     const { t } = useTranslation();
     const { core } = useServices();
+    const { siteLogout, siteAuthEnabled } = useContext(SiteAuthContext);
 
     const avatar = useMemo(() => (
         !profile.auth ?
@@ -56,6 +58,15 @@ const User = ({ profile }: Props) => {
                                 href={'#/intro'}
                                 target={'_self'}
                             />
+                    }
+                    {
+                        siteAuthEnabled ?
+                            <Link
+                                label={'Site Logout'}
+                                onClick={siteLogout}
+                            />
+                            :
+                            null
                     }
                 </div>
             </div>
